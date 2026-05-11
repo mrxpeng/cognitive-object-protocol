@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cognitiveobjectprotocol.org/schemas/object.schema.json",
+  "title": "COP Object",
+  "type": "object",
+  "required": ["id", "type", "title", "language"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^obj_[A-Za-z0-9_-]+$" },
+    "type": {
+      "type": "string",
+      "pattern": "^(research_memo|code_review|meeting_decision|product_prd|contract_review|content_review|case_summary|workflow|knowledge_card|conversation_summary|x-[A-Za-z0-9_-]+)$"
+    },
+    "title": { "type": "string", "minLength": 1 },
+    "language": { "type": "string", "minLength": 2 },
+    "description": { "type": "string" },
+    "owner": { "type": "string" },
+    "created_at": { "type": "string" },
+    "updated_at": { "type": "string" },
+    "state": { "$ref": "https://cognitiveobjectprotocol.org/schemas/state.schema.json" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "additionalProperties": false
+}

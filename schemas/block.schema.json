@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cognitiveobjectprotocol.org/schemas/block.schema.json",
+  "title": "COP Block",
+  "type": "object",
+  "required": ["id", "type", "content"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^blk_[A-Za-z0-9_-]+$" },
+    "type": {
+      "type": "string",
+      "pattern": "^(title|summary|section|paragraph|definition|claim|assumption|evidence|counter_evidence|risk|question|answer|decision|task|instruction|validation|x-[A-Za-z0-9_-]+)$"
+    },
+    "content": {
+      "type": "object",
+      "required": ["format"],
+      "properties": {
+        "format": { "enum": ["text", "markdown", "json", "table", "code", "media"] },
+        "text": { "type": "string" },
+        "data": {},
+        "language": { "type": "string" }
+      },
+      "if": {
+        "properties": { "format": { "enum": ["text", "markdown", "code"] } },
+        "required": ["format"]
+      },
+      "then": { "required": ["text"] },
+      "additionalProperties": true
+    },
+    "parent_id": { "type": ["string", "null"] },
+    "order": { "type": "number" },
+    "state": { "$ref": "https://cognitiveobjectprotocol.org/schemas/state.schema.json" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "additionalProperties": false
+}

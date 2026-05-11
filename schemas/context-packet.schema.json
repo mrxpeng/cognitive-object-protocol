@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cognitiveobjectprotocol.org/schemas/context-packet.schema.json",
+  "title": "COP Context Packet",
+  "type": "object",
+  "required": ["id", "task", "focus", "context", "expected_output"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^ctx_[A-Za-z0-9_-]+$" },
+    "task": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "enum": [
+            "review_or_rewrite_block",
+            "add_evidence",
+            "resolve_comment",
+            "change_state",
+            "generate_summary",
+            "extract_risks",
+            "custom"
+          ]
+        },
+        "target": { "type": "string" },
+        "instruction": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "focus": { "type": "object", "additionalProperties": true },
+    "context": { "type": "object", "additionalProperties": true },
+    "constraints": { "type": "array", "items": { "type": "string" } },
+    "expected_output": {
+      "type": "object",
+      "required": ["format"],
+      "properties": {
+        "format": { "enum": ["cop_operations", "free_text", "structured_json"] },
+        "allowed_ops": {
+          "type": "array",
+          "items": {
+            "enum": ["update_block", "add_comment", "change_state", "add_relation", "create_block"]
+          }
+        },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "created_at": { "type": "string" }
+  },
+  "additionalProperties": false
+}

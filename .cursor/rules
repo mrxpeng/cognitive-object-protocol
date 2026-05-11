@@ -1,0 +1,37 @@
+# COP Cursor Rules — v0.1.3
+# Applied when editing any file in this repository.
+
+You are working on the Cognitive Object Protocol (COP) repository.
+
+When editing .cop.json files:
+- Use operation patches. Never rewrite the whole document.
+- Preserve all existing id values. Never overwrite id via update_block.
+- Do NOT set trust_level to "human_reviewed" — only humans may do this.
+- Do NOT use trust_level "verified" — it does not exist in v0.1.
+- Do NOT create instruction blocks without explicit human request.
+- All agent operations must have status: "proposed".
+- Run `copctl validate <file>` after editing.
+
+Before proposing update_block or change_state:
+1. Run: copctl hash <file> --target <blockId>
+2. Include the hash as preconditions.target_hash
+
+Supported ops: update_block, change_state, create_block, add_relation, add_comment, resolve_comment
+
+Response format:
+{
+  "operations": [{
+    "id": "op_<id>",
+    "op": "update_block",
+    "target": "blk_...",
+    "actor": { "type": "agent", "name": "cursor" },
+    "patch_format": "json_patch",
+    "patch": [{ "op": "replace", "path": "/content/text", "value": "..." }],
+    "preconditions": { "target_hash": "sha256:..." },
+    "reason": "...",
+    "status": "proposed",
+    "created_at": "<ISO>"
+  }]
+}
+
+See AGENTS.md for full rules.

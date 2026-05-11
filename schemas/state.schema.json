@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cognitiveobjectprotocol.org/schemas/state.schema.json",
+  "title": "COP State",
+  "type": "object",
+  "properties": {
+    "lifecycle": {
+      "enum": [
+        "draft",
+        "reviewing",
+        "approved",
+        "published",
+        "archived",
+        "deprecated",
+        "superseded"
+      ]
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "risk_level": {
+      "enum": [
+        "none",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
+    },
+    "trust_level": {
+      "enum": [
+        "untrusted",
+        "agent_generated",
+        "reasoned",
+        "human_reviewed"
+      ],
+      "description": "Declarative workflow trust metadata \u2014 NOT cryptographic proof. Values agent_generated/reasoned are set by agents. human_reviewed requires a human actor via change_state. verified is reserved for v0.2 and MUST NOT appear in v0.1 documents."
+    },
+    "review_status": {
+      "enum": [
+        "unreviewed",
+        "needs_human_review",
+        "reviewed",
+        "rejected",
+        "accepted"
+      ]
+    },
+    "freshness": {
+      "enum": [
+        "current",
+        "outdated",
+        "unknown"
+      ]
+    },
+    "visibility": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

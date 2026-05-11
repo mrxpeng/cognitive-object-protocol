@@ -1,0 +1,142 @@
+{
+  "protocol": "cop",
+  "version": "0.1",
+  "object": {
+    "id": "obj_research_memo_001",
+    "title": "Rethinking documents for the AI era",
+    "language": "en",
+    "created_at": "2026-05-10T22:00:00+09:00",
+    "type": "research_memo",
+    "state": {
+      "lifecycle": "draft"
+    }
+  },
+  "blocks": [
+    {
+      "id": "blk_rm_summary",
+      "type": "summary",
+      "order": 1,
+      "content": {
+        "format": "text",
+        "text": "AI-era documents should be modeled as cognitive objects: block graphs with state, operations, views, and context packets."
+      },
+      "state": {
+        "confidence": 0.9,
+        "review_status": "unreviewed",
+        "trust_level": "reasoned"
+      }
+    },
+    {
+      "id": "blk_rm_claim_001",
+      "type": "claim",
+      "order": 2,
+      "content": {
+        "format": "text",
+        "text": "Markdown optimizes for lightweight human writing, but does not explicitly represent claims, evidence, review states, or model operations."
+      },
+      "state": {
+        "confidence": 0.86,
+        "risk_level": "low"
+      }
+    },
+    {
+      "id": "blk_rm_claim_002",
+      "type": "claim",
+      "order": 3,
+      "content": {
+        "format": "text",
+        "text": "HTML optimizes for rendering and browser compatibility, but should usually be treated as a view export rather than the canonical source of AI-era knowledge objects."
+      },
+      "state": {
+        "confidence": 0.84,
+        "risk_level": "low"
+      }
+    },
+    {
+      "id": "blk_rm_decision_001",
+      "type": "decision",
+      "order": 4,
+      "content": {
+        "format": "text",
+        "text": "COP v0.1 should prioritize schemas, examples, validation, and a renderer before advanced integrations."
+      },
+      "state": {
+        "review_status": "needs_human_review"
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "rel_rm_001",
+      "from": "blk_rm_claim_001",
+      "to": "blk_rm_summary",
+      "type": "explains",
+      "strength": 0.8
+    },
+    {
+      "id": "rel_rm_002",
+      "from": "blk_rm_claim_002",
+      "to": "blk_rm_summary",
+      "type": "explains",
+      "strength": 0.78
+    },
+    {
+      "id": "rel_rm_003",
+      "from": "blk_rm_decision_001",
+      "to": "blk_rm_summary",
+      "type": "derived_from",
+      "strength": 0.7
+    }
+  ],
+  "comments": [
+    {
+      "id": "cmt_rm_001",
+      "target": {
+        "id": "blk_rm_decision_001"
+      },
+      "author": {
+        "type": "human",
+        "role": "reviewer"
+      },
+      "type": "question",
+      "content": "Should v0.1 include MCP server stubs or postpone them to v0.4?",
+      "status": "open",
+      "created_at": "2026-05-10T22:05:00+09:00"
+    }
+  ],
+  "views": [
+    {
+      "id": "view_rm_summary",
+      "type": "executive_summary",
+      "include": [
+        "title",
+        "summary",
+        "claim",
+        "decision"
+      ],
+      "layout": "card_stack"
+    },
+    {
+      "id": "view_rm_agent",
+      "type": "agent_context",
+      "include": [
+        "blocks",
+        "relations",
+        "comments"
+      ],
+      "layout": "machine"
+    }
+  ],
+  "sources": [],
+  "operations": [
+    {
+      "id": "op_rm_001",
+      "op": "create_block",
+      "target": "blk_rm_summary",
+      "actor": "assistant",
+      "status": "applied",
+      "reason": "Initial example creation",
+      "created_at": "2026-05-10T22:00:00+09:00"
+    }
+  ]
+}

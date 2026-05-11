@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cognitiveobjectprotocol.org/schemas/cop.schema.json",
+  "title": "Cognitive Object Protocol v0.1",
+  "type": "object",
+  "required": [
+    "protocol",
+    "version",
+    "object",
+    "blocks",
+    "relations"
+  ],
+  "properties": {
+    "protocol": {
+      "const": "cop"
+    },
+    "version": {
+      "const": "0.1"
+    },
+    "object": {
+      "$ref": "https://cognitiveobjectprotocol.org/schemas/object.schema.json"
+    },
+    "blocks": {
+      "type": "array",
+      "items": {
+        "$ref": "https://cognitiveobjectprotocol.org/schemas/block.schema.json"
+      }
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "$ref": "https://cognitiveobjectprotocol.org/schemas/relation.schema.json"
+      }
+    },
+    "comments": {
+      "type": "array",
+      "items": {
+        "$ref": "https://cognitiveobjectprotocol.org/schemas/comment.schema.json"
+      },
+      "default": []
+    },
+    "operations": {
+      "type": "array",
+      "items": {
+        "$ref": "https://cognitiveobjectprotocol.org/schemas/operation.schema.json"
+      },
+      "default": []
+    },
+    "views": {
+      "type": "array",
+      "items": {
+        "$ref": "https://cognitiveobjectprotocol.org/schemas/view.schema.json"
+      },
+      "default": []
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "https://cognitiveobjectprotocol.org/schemas/source.schema.json"
+      },
+      "default": []
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

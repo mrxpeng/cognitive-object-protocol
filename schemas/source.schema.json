@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cognitiveobjectprotocol.org/schemas/source.schema.json",
+  "title": "COP Source",
+  "type": "object",
+  "required": ["id", "type", "title"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^src_[A-Za-z0-9_-]+$" },
+    "type": { "enum": ["url", "file", "paper", "book", "dataset", "conversation", "email", "unknown"] },
+    "title": { "type": "string", "minLength": 1 },
+    "url": { "type": "string" },
+    "reliability": { "enum": ["low", "medium", "high", "unknown"] },
+    "published_at": { "type": "string" },
+    "accessed_at": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "additionalProperties": false
+}

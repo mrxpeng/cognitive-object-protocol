@@ -1,0 +1,9 @@
+diff --git a/src/profile.ts b/src/profile.ts
+index 1111111..2222222 100644
+--- a/src/profile.ts
++++ b/src/profile.ts
+@@ -10,7 +10,7 @@ export async function getProfile(user, orgId) {
+-  const key = `profile:${orgId}:${user.id}`;
++  const key = `profile:${user.id}`;
+   return cache.getOrSet(key, () => db.profile.findFirst({ where: { userId: user.id, orgId } }));
+ }

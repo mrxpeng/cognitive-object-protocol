@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cognitiveobjectprotocol.org/schemas/comment.schema.json",
+  "title": "COP Comment",
+  "type": "object",
+  "required": ["id", "target", "author", "type", "content", "status"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^cmt_[A-Za-z0-9_-]+$" },
+    "target": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": { "type": "string" },
+        "range": {
+          "type": "array",
+          "items": { "type": "integer" },
+          "minItems": 2,
+          "maxItems": 2
+        }
+      },
+      "additionalProperties": false
+    },
+    "author": {
+      "type": "object",
+      "properties": {
+        "type": { "enum": ["human", "agent", "system"] },
+        "role": { "type": "string" },
+        "name": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "type": { "enum": ["note", "rewrite_request", "ask_for_evidence", "risk_flag", "approval", "rejection", "question"] },
+    "content": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["open", "accepted", "rejected", "resolved", "superseded"] },
+    "created_at": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,102 @@
+{
+  "protocol": "cop",
+  "version": "0.1",
+  "object": {
+    "id": "obj_meeting_decision_001",
+    "title": "Example meeting decision object",
+    "language": "en",
+    "type": "meeting_decision",
+    "state": {
+      "lifecycle": "reviewing"
+    }
+  },
+  "blocks": [
+    {
+      "id": "blk_md_summary",
+      "type": "summary",
+      "order": 1,
+      "content": {
+        "format": "text",
+        "text": "The team agreed to ship the validation CLI before building a full viewer."
+      },
+      "state": {
+        "confidence": 0.92,
+        "review_status": "unreviewed"
+      }
+    },
+    {
+      "id": "blk_md_decision",
+      "type": "decision",
+      "order": 2,
+      "content": {
+        "format": "text",
+        "text": "Prioritize `cop validate` and `cop render` for v0.1."
+      },
+      "state": {
+        "review_status": "needs_human_review"
+      }
+    },
+    {
+      "id": "blk_md_task",
+      "type": "task",
+      "order": 3,
+      "content": {
+        "format": "text",
+        "text": "Implement JSON Schema validation and dangling reference checks."
+      },
+      "state": {
+        "lifecycle": "draft"
+      }
+    },
+    {
+      "id": "blk_md_risk",
+      "type": "risk",
+      "order": 4,
+      "content": {
+        "format": "text",
+        "text": "If the protocol ships without runnable tools, it may be perceived as a concept rather than an engineering project."
+      },
+      "state": {
+        "risk_level": "medium"
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "rel_md_001",
+      "from": "blk_md_decision",
+      "to": "blk_md_summary",
+      "type": "explains",
+      "strength": 0.9
+    },
+    {
+      "id": "rel_md_002",
+      "from": "blk_md_task",
+      "to": "blk_md_decision",
+      "type": "task_for",
+      "strength": 1
+    },
+    {
+      "id": "rel_md_003",
+      "from": "blk_md_risk",
+      "to": "blk_md_decision",
+      "type": "risk_of",
+      "strength": 0.7
+    }
+  ],
+  "comments": [],
+  "operations": [],
+  "views": [
+    {
+      "id": "view_md_summary",
+      "type": "executive_summary",
+      "include": [
+        "summary",
+        "decision",
+        "task",
+        "risk"
+      ]
+    }
+  ],
+  "sources": []
+}

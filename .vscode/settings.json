@@ -1,0 +1,8 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": ["*.cop.json", "**/*.cop.json"],
+      "url": "./schemas/cop.schema.json"
+    }
+  ]
+}

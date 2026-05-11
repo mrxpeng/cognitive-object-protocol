@@ -1,0 +1,86 @@
+{
+  "protocol": "cop",
+  "version": "0.1",
+  "object": {
+    "id": "obj_product_prd_001",
+    "title": "COP Viewer MVP PRD",
+    "language": "en",
+    "type": "product_prd",
+    "state": {
+      "lifecycle": "draft"
+    }
+  },
+  "blocks": [
+    {
+      "id": "blk_prd_summary",
+      "type": "summary",
+      "order": 1,
+      "content": {
+        "format": "text",
+        "text": "The Viewer MVP renders COP objects into a readable review dashboard with block IDs, relation links, and comments."
+      }
+    },
+    {
+      "id": "blk_prd_claim",
+      "type": "claim",
+      "order": 2,
+      "content": {
+        "format": "text",
+        "text": "A useful viewer is required for human adoption because humans should not read raw JSON for review work."
+      },
+      "state": {
+        "confidence": 0.9
+      }
+    },
+    {
+      "id": "blk_prd_task_001",
+      "type": "task",
+      "order": 3,
+      "content": {
+        "format": "text",
+        "text": "Render summary, claims, risks, tasks, comments, and relations as separate visual sections."
+      }
+    },
+    {
+      "id": "blk_prd_validation",
+      "type": "validation",
+      "order": 4,
+      "content": {
+        "format": "text",
+        "text": "The renderer must escape all HTML content and must not execute code embedded in COP blocks."
+      },
+      "state": {
+        "risk_level": "high"
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "rel_prd_001",
+      "from": "blk_prd_task_001",
+      "to": "blk_prd_summary",
+      "type": "task_for"
+    },
+    {
+      "id": "rel_prd_002",
+      "from": "blk_prd_validation",
+      "to": "blk_prd_task_001",
+      "type": "validates"
+    }
+  ],
+  "comments": [],
+  "operations": [],
+  "views": [
+    {
+      "id": "view_prd_full",
+      "type": "full_document",
+      "include": [
+        "summary",
+        "claim",
+        "task",
+        "validation"
+      ]
+    }
+  ],
+  "sources": []
+}

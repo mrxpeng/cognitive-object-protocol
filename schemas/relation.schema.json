@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cognitiveobjectprotocol.org/schemas/relation.schema.json",
+  "title": "COP Relation",
+  "type": "object",
+  "required": [
+    "id",
+    "from",
+    "to",
+    "type"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^rel_[A-Za-z0-9_-]+$"
+    },
+    "from": {
+      "type": "string",
+      "pattern": "^(blk|src|rel|cmt|op|view|obj)_[A-Za-z0-9_-]+$",
+      "description": "Entity ID. Prefix indicates type: blk_ block, src_ source, rel_ relation, cmt_ comment."
+    },
+    "to": {
+      "type": "string",
+      "pattern": "^(blk|src|rel|cmt|op|view|obj)_[A-Za-z0-9_-]+$",
+      "description": "Entity ID. Prefix indicates type: blk_ block, src_ source, rel_ relation, cmt_ comment."
+    },
+    "type": {
+      "enum": [
+        "supports",
+        "contradicts",
+        "explains",
+        "depends_on",
+        "derived_from",
+        "updates",
+        "risk_of",
+        "task_for",
+        "validates",
+        "references"
+      ]
+    },
+    "strength": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

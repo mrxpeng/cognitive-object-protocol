@@ -1,0 +1,71 @@
+{
+  "name": "cognitive-object-protocol",
+  "version": "0.1.6",
+  "private": false,
+  "description": "Experimental AI-native cognitive object protocol for human-reviewed, model-editable, graph-stored knowledge work.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "copctl": "dist/cli.js",
+    "cop": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && chmod +x dist/cli.js",
+    "test": "node --test tests/*.test.mjs",
+    "validate:examples": "node dist/cli.js validate examples/*.cop.json",
+    "render:example": "node dist/cli.js render examples/research-memo.cop.json --to html --out /tmp/research-memo.html",
+    "export:example": "node dist/cli.js export examples/research-memo.cop.json --to markdown --out /tmp/research-memo.md",
+    "demo:apply-op": "node dist/cli.js apply-op examples/code-review.cop.json examples/operation-patch.json --dry-run",
+    "context:prompt": "node dist/cli.js context examples/code-review.cop.json --target blk_cr_claim_001 --prompt --estimate-tokens",
+    "demo:hash": "node dist/cli.js hash examples/code-review.cop.json --target blk_cr_claim_001",
+    "demo:context": "node dist/cli.js context examples/code-review.cop.json --target blk_cr_claim_001 --prompt --estimate-tokens",
+    "demo:e2e": "node dist/cli.js validate examples/e2e-code-review/review.cop.json && node dist/cli.js apply-op examples/e2e-code-review/review.cop.json examples/e2e-code-review/operation-patch.json --dry-run"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "commander": "^12.1.0",
+    "glob": "^13.0.6"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0"
+  },
+  "files": [
+    "dist",
+    "schemas",
+    "examples",
+    "README.md",
+    "SPEC.md",
+    "ARCHITECTURE.md",
+    "SECURITY.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "AGENTS.md",
+    "CONTRIBUTING.md",
+    "ROADMAP.md",
+    "docs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cognitive-object-protocol/cognitive-object-protocol.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cognitive-object-protocol/cognitive-object-protocol/issues"
+  },
+  "homepage": "https://github.com/cognitive-object-protocol/cognitive-object-protocol#readme",
+  "keywords": [
+    "ai",
+    "agent",
+    "protocol",
+    "document",
+    "knowledge-graph",
+    "json-schema",
+    "llm",
+    "cognitive-object",
+    "operation-log"
+  ],
+  "engines": {
+    "node": ">=20"
+  }
+}

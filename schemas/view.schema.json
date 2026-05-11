@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cognitiveobjectprotocol.org/schemas/view.schema.json",
+  "title": "COP View",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "include"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^view_[A-Za-z0-9_-]+$"
+    },
+    "type": {
+      "enum": [
+        "executive_summary",
+        "review_dashboard",
+        "agent_context",
+        "risk_view",
+        "evidence_view",
+        "task_view",
+        "full_document"
+      ]
+    },
+    "include": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "Block type string (e.g. 'claim', 'risk', 'task') or 'blocks', 'relations', 'comments' for all of a collection."
+      },
+      "minItems": 1
+    },
+    "filters": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "layout": {
+      "enum": [
+        "card_stack",
+        "two_column",
+        "machine",
+        "timeline",
+        "table",
+        "free"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,121 @@
+{
+  "protocol": "cop",
+  "version": "0.1",
+  "object": {
+    "id": "obj_contract_review_001",
+    "title": "Example contract risk review",
+    "language": "en",
+    "type": "contract_review",
+    "state": {
+      "lifecycle": "reviewing"
+    }
+  },
+  "blocks": [
+    {
+      "id": "blk_contract_summary",
+      "type": "summary",
+      "order": 1,
+      "content": {
+        "format": "text",
+        "text": "The agreement contains a broad IP assignment clause and unclear termination obligations."
+      },
+      "state": {
+        "risk_level": "medium",
+        "review_status": "unreviewed"
+      }
+    },
+    {
+      "id": "blk_contract_claim",
+      "type": "claim",
+      "order": 2,
+      "content": {
+        "format": "text",
+        "text": "The IP assignment clause may transfer pre-existing materials unless explicitly excluded."
+      },
+      "state": {
+        "confidence": 0.78,
+        "risk_level": "high"
+      }
+    },
+    {
+      "id": "blk_contract_evidence",
+      "type": "evidence",
+      "order": 3,
+      "content": {
+        "format": "text",
+        "text": "Clause 5.1 assigns 'all work product and related materials' without a carve-out for background IP."
+      }
+    },
+    {
+      "id": "blk_contract_risk",
+      "type": "risk",
+      "order": 4,
+      "content": {
+        "format": "text",
+        "text": "Potential unintended transfer of templates, tools, and pre-existing assets."
+      },
+      "state": {
+        "risk_level": "high"
+      }
+    },
+    {
+      "id": "blk_contract_task",
+      "type": "task",
+      "order": 5,
+      "content": {
+        "format": "text",
+        "text": "Add a background IP exclusion and define licensed deliverables separately from pre-existing materials."
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "rel_contract_001",
+      "from": "blk_contract_evidence",
+      "to": "blk_contract_claim",
+      "type": "supports"
+    },
+    {
+      "id": "rel_contract_002",
+      "from": "blk_contract_risk",
+      "to": "blk_contract_claim",
+      "type": "risk_of"
+    },
+    {
+      "id": "rel_contract_003",
+      "from": "blk_contract_task",
+      "to": "blk_contract_risk",
+      "type": "task_for"
+    }
+  ],
+  "comments": [
+    {
+      "id": "cmt_contract_001",
+      "target": {
+        "id": "blk_contract_claim"
+      },
+      "author": {
+        "type": "human",
+        "role": "lawyer"
+      },
+      "type": "rewrite_request",
+      "content": "Make this less conclusive unless the full contract confirms there is no background IP clause elsewhere.",
+      "status": "open"
+    }
+  ],
+  "operations": [],
+  "views": [
+    {
+      "id": "view_contract_risk",
+      "type": "risk_view",
+      "include": [
+        "summary",
+        "claim",
+        "evidence",
+        "risk",
+        "task"
+      ]
+    }
+  ],
+  "sources": []
+}

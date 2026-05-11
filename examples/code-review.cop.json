@@ -1,0 +1,159 @@
+{
+  "protocol": "cop",
+  "version": "0.1",
+  "object": {
+    "id": "obj_code_review_001",
+    "title": "Example AI code review as a cognitive object",
+    "language": "en",
+    "type": "code_review",
+    "state": {
+      "lifecycle": "reviewing"
+    }
+  },
+  "blocks": [
+    {
+      "id": "blk_cr_summary",
+      "type": "summary",
+      "order": 1,
+      "content": {
+        "format": "text",
+        "text": "The change improves caching but introduces a possible stale-data risk and lacks invalidation tests."
+      },
+      "state": {
+        "confidence": 0.88,
+        "risk_level": "medium",
+        "review_status": "unreviewed"
+      }
+    },
+    {
+      "id": "blk_cr_claim_001",
+      "type": "claim",
+      "order": 2,
+      "content": {
+        "format": "text",
+        "text": "The cache key does not include the user's organization ID, which may cause cross-tenant cache collisions."
+      },
+      "state": {
+        "confidence": 0.81,
+        "risk_level": "high",
+        "review_status": "needs_human_review"
+      }
+    },
+    {
+      "id": "blk_cr_evidence_001",
+      "type": "evidence",
+      "order": 3,
+      "content": {
+        "format": "code",
+        "language": "ts",
+        "text": "const key = `profile:${user.id}`;"
+      }
+    },
+    {
+      "id": "blk_cr_risk_001",
+      "type": "risk",
+      "order": 4,
+      "content": {
+        "format": "text",
+        "text": "Potential data leakage across organizations if user IDs are not globally unique or if profile visibility differs by tenant."
+      },
+      "state": {
+        "risk_level": "high",
+        "review_status": "needs_human_review"
+      }
+    },
+    {
+      "id": "blk_cr_task_001",
+      "type": "task",
+      "order": 5,
+      "content": {
+        "format": "text",
+        "text": "Update the cache key to include orgId and add a regression test for tenant isolation."
+      },
+      "state": {
+        "lifecycle": "draft"
+      }
+    },
+    {
+      "id": "blk_cr_validation_001",
+      "type": "validation",
+      "order": 6,
+      "content": {
+        "format": "text",
+        "text": "A valid fix must include orgId in the key and a test that fails without the orgId dimension."
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "rel_cr_001",
+      "from": "blk_cr_evidence_001",
+      "to": "blk_cr_claim_001",
+      "type": "supports",
+      "strength": 0.76
+    },
+    {
+      "id": "rel_cr_002",
+      "from": "blk_cr_risk_001",
+      "to": "blk_cr_claim_001",
+      "type": "risk_of",
+      "strength": 0.9
+    },
+    {
+      "id": "rel_cr_003",
+      "from": "blk_cr_task_001",
+      "to": "blk_cr_claim_001",
+      "type": "task_for",
+      "strength": 1
+    },
+    {
+      "id": "rel_cr_004",
+      "from": "blk_cr_validation_001",
+      "to": "blk_cr_task_001",
+      "type": "validates",
+      "strength": 1
+    }
+  ],
+  "comments": [
+    {
+      "id": "cmt_cr_001",
+      "target": {
+        "id": "blk_cr_claim_001"
+      },
+      "author": {
+        "type": "human",
+        "role": "maintainer"
+      },
+      "type": "ask_for_evidence",
+      "content": "Please verify whether user IDs are globally unique before marking this blocking.",
+      "status": "open"
+    }
+  ],
+  "views": [
+    {
+      "id": "view_cr_review",
+      "type": "review_dashboard",
+      "include": [
+        "summary",
+        "claim",
+        "evidence",
+        "risk",
+        "task",
+        "validation"
+      ],
+      "layout": "two_column"
+    },
+    {
+      "id": "view_cr_risk",
+      "type": "risk_view",
+      "include": [
+        "risk",
+        "claim",
+        "task"
+      ],
+      "layout": "card_stack"
+    }
+  ],
+  "sources": [],
+  "operations": []
+}
