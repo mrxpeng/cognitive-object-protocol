@@ -14,7 +14,6 @@ Deliverables:
 - HTML renderer
 - Markdown exporter
 - Agent instructions
-- Adversarial review prompt
 
 ## v0.2 — Operations and Context Packets
 
