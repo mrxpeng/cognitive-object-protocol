@@ -48,12 +48,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/cognitive-object-protocol/cognitive-object-protocol.git"
+    "url": "https://github.com/mrxpeng/cognitive-object-protocol.git"
   },
   "bugs": {
-    "url": "https://github.com/cognitive-object-protocol/cognitive-object-protocol/issues"
+    "url": "https://github.com/mrxpeng/cognitive-object-protocol/issues"
   },
-  "homepage": "https://github.com/cognitive-object-protocol/cognitive-object-protocol#readme",
+  "homepage": "https://github.com/mrxpeng/cognitive-object-protocol#readme",
   "keywords": [
     "ai",
     "agent",
