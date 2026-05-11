@@ -134,7 +134,7 @@ That is the core COP loop: **typed blocks → explicit relations → human comme
 ### Option A — use from a cloned repository
 
 ```bash
-git clone https://github.com/cognitive-object-protocol/cognitive-object-protocol
+git clone https://github.com/mrxpeng/cognitive-object-protocol
 cd cognitive-object-protocol
 npm install
 npm run build
