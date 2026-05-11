@@ -8,6 +8,51 @@ COP is a JSON format for documents that AI agents generate, humans annotate and 
 
 ---
 
+## 中文速览
+
+COP v0.1.6 是一个 **experimental working draft（实验性工作草案）**，用于讨论 AI 生成、人工审阅、可由 agent 编辑的 cognitive objects 应该长什么样。
+
+它不是标准，不是浏览器协议，也不是 Markdown 的替代品。COP 更像一个可测试的对象模型，用来讨论 AI-native 文档和工作流协议可能如何表达：
+
+```text
+AI 生成 → 人类审阅 → 人类评论 → AI 提出结构化修改 → 人类批准 → 存储 → 复用
+```
+
+适合先尝试 COP 的场景：
+
+- AI 代码审查报告
+- 带有 claim / evidence / risk 的研究备忘录
+- 会议决策、任务和风险记录
+- 合同、政策或产品需求审阅
+- 需要保留操作日志和人工反馈的 agent 工作流
+
+不适合使用 COP 的场景：
+
+- 普通笔记、博客草稿、README、一次性文本
+- 不需要 block-level AI 编辑的文档
+- 不需要审阅状态、证据关系、风险状态或操作日志的内容
+
+5 分钟本地试跑：
+
+```bash
+git clone https://github.com/mrxpeng/cognitive-object-protocol
+cd cognitive-object-protocol
+npm install
+npm run build
+npm test
+npm run validate:examples
+node dist/cli.js context examples/code-review.cop.json --target blk_cr_claim_001 --prompt --estimate-tokens
+```
+
+如果你只想理解项目，可以先看：
+
+- [`examples/code-review.cop.json`](./examples/code-review.cop.json) — AI code review 示例对象
+- [`examples/e2e-code-review/`](./examples/e2e-code-review/) — 端到端 code review demo
+- [`SPEC.md`](./SPEC.md) — 协议草案
+- [`SECURITY.md`](./SECURITY.md) — 信任边界和安全说明
+
+---
+
 ## Who should try COP?
 
 Use COP when a document is not just text, but a reviewable object that needs block-level AI edits, human comments, trust/review state, evidence relations, and operation history.
