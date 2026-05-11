@@ -1,4 +1,4 @@
-# COP v0.1 Specification Draft
+# COP v0.2 Alpha Specification Draft
 
 **Protocol:** Cognitive Object Protocol  
 **Version:** 0.1 draft  
@@ -274,7 +274,7 @@ create_view
 export_view
 ```
 
-Reference CLI support in v0.1.6 is intentionally smaller than the full schema. The CLI can apply:
+Reference CLI support in v0.2.0-alpha.1 is intentionally smaller than the full schema. The CLI can apply:
 
 ```text
 update_block
@@ -394,7 +394,7 @@ Recommended fields:
 
 ## 12. Context packet model
 
-A context packet is a minimal model-input bundle for a specific task. It is not itself a model call. v0.1 implementations may render it as JSON or as a ready-to-paste prompt; API adapters are intentionally out of scope for the core protocol.
+A context packet is a minimal model-input bundle for a specific task. It is not itself a model call. v0.2 alpha implementations may render it as JSON or as a ready-to-paste prompt; API adapters are intentionally out of scope for the core protocol.
 
 Required fields:
 
@@ -405,6 +405,21 @@ Required fields:
 | focus | object | Primary target. |
 | context | object | Relevant supporting data. |
 | expected_output | object | Expected model output format. |
+
+
+## 12A. Diff-derived COP objects
+
+The v0.2 alpha reference CLI includes `copctl from-diff` and `copctl from-git`. These commands are workflow helpers, not new canonical top-level protocol fields.
+
+A diff-derived COP object SHOULD use:
+
+- `object.type = "code_review"`
+- `x-changed_file` blocks for changed files
+- `x-diff_hunk` blocks for diff hunks
+- `references` relations from hunk blocks to file blocks
+- `references` relations from file blocks to the summary block
+
+The `x-` prefix marks extension block types. Implementations MUST preserve unknown `x-` block types during round trips. `from-diff` is structural only: it does not claim to perform semantic code review.
 
 ## 13. Validation rules
 
@@ -459,15 +474,9 @@ See `docs/comparison.md`.
 
 ## 16. Compatibility
 
-COP SHOULD support export to:
+The v0.2 alpha reference CLI currently supports HTML rendering, Markdown export, and native COP JSON.
 
-```text
-HTML
-Markdown
-JSON
-DOCX
-PDF
-```
+Future adapters MAY support DOCX, PDF, JSON-LD, and other formats.
 
 COP MAY support integration with:
 

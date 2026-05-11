@@ -1,55 +1,14 @@
 # COP — Cognitive Object Protocol
 
-> ⚠️ **Experimental working draft — v0.1.6. Schemas and APIs will change without notice.**
+[简体中文](./README.zh-CN.md)
+
+> ⚠️ **Experimental working draft — v0.2.0-alpha.1. Schemas and APIs will change without notice.**
 
 > Structured documents for the AI editing loop: block-typed, operation-logged, human-reviewed.
 
-COP is a JSON format for documents that AI agents generate, humans annotate and decide on, and models edit **block-by-block** — without rewriting the whole file.
+COP is a JSON-based object model and reference CLI for content that AI agents generate, humans annotate and decide on, and models edit **block-by-block** — without rewriting the whole file. v0.2.0-alpha.1 adds the first concrete workflow tool: `copctl from-diff`.
 
----
-
-## 中文速览
-
-COP v0.1.6 是一个 **experimental working draft（实验性工作草案）**，用于讨论 AI 生成、人工审阅、可由 agent 编辑的 cognitive objects 应该长什么样。
-
-它不是标准，不是浏览器协议，也不是 Markdown 的替代品。COP 更像一个可测试的对象模型，用来讨论 AI-native 文档和工作流协议可能如何表达：
-
-```text
-AI 生成 → 人类审阅 → 人类评论 → AI 提出结构化修改 → 人类批准 → 存储 → 复用
-```
-
-适合先尝试 COP 的场景：
-
-- AI 代码审查报告
-- 带有 claim / evidence / risk 的研究备忘录
-- 会议决策、任务和风险记录
-- 合同、政策或产品需求审阅
-- 需要保留操作日志和人工反馈的 agent 工作流
-
-不适合使用 COP 的场景：
-
-- 普通笔记、博客草稿、README、一次性文本
-- 不需要 block-level AI 编辑的文档
-- 不需要审阅状态、证据关系、风险状态或操作日志的内容
-
-5 分钟本地试跑：
-
-```bash
-git clone https://github.com/mrxpeng/cognitive-object-protocol
-cd cognitive-object-protocol
-npm install
-npm run build
-npm test
-npm run validate:examples
-node dist/cli.js context examples/code-review.cop.json --target blk_cr_claim_001 --prompt --estimate-tokens
-```
-
-如果你只想理解项目，可以先看：
-
-- [`examples/code-review.cop.json`](./examples/code-review.cop.json) — AI code review 示例对象
-- [`examples/e2e-code-review/`](./examples/e2e-code-review/) — 端到端 code review demo
-- [`SPEC.md`](./SPEC.md) — 协议草案
-- [`SECURITY.md`](./SECURITY.md) — 信任边界和安全说明
+COP is not a standard, not a browser protocol, not a Markdown replacement, and not a production-grade security framework. It is a testable object model and CLI for AI-generated, human-reviewed, agent-editable cognitive objects.
 
 ---
 
@@ -89,6 +48,26 @@ Markdown, HTML, and JSON each solve part of this. None of them make these **firs
 | Human comments tied to specific blocks | partial | ✗ | ✓ |
 
 ---
+
+## v0.2 alpha: first real workflow loop
+
+v0.2 alpha focuses on one concrete killer workflow: **AI-assisted code review as a COP object**.
+
+```bash
+git diff main...HEAD > pr.diff
+copctl from-diff pr.diff --out review.cop.json
+copctl validate review.cop.json
+copctl context review.cop.json --target blk_diff_summary --prompt --with-hash --estimate-tokens --out /tmp/context.json
+# model returns operation patch
+copctl apply-op review.cop.json operation-patch.json --atomic --dry-run
+copctl render review.cop.json --to html --out review.html
+```
+
+This is still an experimental workflow. `from-diff` creates a structural review object from a unified diff; it does not yet perform semantic code analysis by itself.
+
+> Protocol note: the canonical COP schema version remains `0.1` in v0.2 alpha. `0.2.0-alpha.1` is the CLI/reference implementation version.
+
+> Security note: model-generated patches should include `preconditions.target_hash` for any block update. Use `copctl context --with-hash` or `copctl hash` before asking a model to produce an operation patch.
 
 
 ## Before / after: AI code review
@@ -226,7 +205,7 @@ copctl context code-review.cop.json --target blk_claim --prompt --prompt-out /tm
     "id": "op_001",
     "op": "update_block",
     "target": "blk_claim",
-    "actor": { "type": "agent", "name": "claude-sonnet-4" },
+    "actor": { "type": "agent", "name": "review-agent" },
     "patch_format": "json_patch",
     "patch": [{ "op": "replace", "path": "/content/text", "value": "Cache key omits orgId — cross-tenant collision confirmed for shared-ID deployments." }],
     "preconditions": { "target_hash": "sha256:abc123..." },
@@ -258,11 +237,11 @@ copctl apply-op examples/e2e-code-review/review.cop.json examples/e2e-code-revie
 copctl render examples/e2e-code-review/review.cop.json --to html --out /tmp/cop-review.html
 ```
 
-`copctl from-diff` is intentionally not part of v0.1. It is the top v0.2 workflow priority.
+`copctl from-diff` is available in v0.2 alpha. It creates a structural COP review object from a unified diff; semantic review still comes from a model or human reviewer.
 
 ---
 
-## What COP v0.1 contains
+## What COP v0.2 alpha contains
 
 | Path | Contents |
 |---|---|
@@ -288,11 +267,11 @@ copctl render examples/e2e-code-review/review.cop.json --to html --out /tmp/cop-
 4. **Stateful.** Trust, risk, review, lifecycle are explicit on every block.
 5. **Graph-aware.** Blocks link via typed, weighted relations.
 6. **Context-efficient.** Context packets = minimum relevant slice for a model call.
-7. **Renderer-agnostic.** Exports to HTML, Markdown, and (v0.2) DOCX, PDF, JSON-LD.
+7. **Renderer-agnostic.** Renders to HTML and exports to Markdown today. DOCX, PDF, and JSON-LD are roadmap items, not current v0.2 alpha features.
 
 ---
 
-## Non-goals for v0.1
+## Non-goals for v0.2 alpha
 
 - Not a browser standard or W3C proposal.
 - Not a replacement for Markdown notes or HTML pages.
@@ -301,6 +280,14 @@ copctl render examples/e2e-code-review/review.cop.json --to html --out /tmp/cop-
 - Not cryptographically signed (v0.2 roadmap).
 
 ---
+
+## Current limitations
+
+- `copctl from-diff` is structural only. It does not perform semantic code analysis.
+- `copctl from-diff` handles standard unified diffs and deleted files, but rename / binary / metadata-only diffs are still limited alpha behavior.
+- Generated diff block IDs include a stable hash suffix to avoid collisions for non-ASCII or heavily sanitized file paths.
+- `--atomic` is a CLI-level all-or-nothing write guard, not a full database transaction.
+- Trust metadata is workflow metadata, not cryptographic identity.
 
 ## Security note
 

@@ -1,4 +1,4 @@
-# COP Agent Instructions — v0.1.3
+# COP Agent Instructions — v0.2.0-alpha.1
 
 These instructions apply to all files in this repository and to any agent working with `.cop.json` files.
 
@@ -56,7 +56,7 @@ Include it in the operation:
 Use `patch_format: "json_patch"` with precise `/content/text` paths when possible.
 Use `patch_format: "object_merge"` only when replacing multiple fields at once.
 
-## Supported operations in v0.1.3
+## Supported executable operations in v0.2.0-alpha.1
 
 | Op | Description | Required fields in patch |
 |---|---|---|
@@ -101,4 +101,4 @@ If you are uncertain which block ID to target, emit an `add_comment` instead of 
 ## Cursor / Claude Code integration
 
 `.cursor/rules` contains a summary of these instructions for Cursor users.
-For Claude Code, this file (`AGENTS.md`) is read automatically.
+This file (`AGENTS.md`) provides repository-level rules for compatible coding agents.

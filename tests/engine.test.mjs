@@ -316,3 +316,24 @@ test("json_patch update_block rejects block.type overwrite", () => {
   assert.match(opResult.error, /Forbidden JSON Patch path|protected fields|semantic operation/i);
   assert.equal(result.doc.blocks[0].type, "claim");
 });
+
+test("create_block rejects trust_level=human_reviewed from non-human actor", () => {
+  const doc = baseDoc();
+  const result = applyOperations(doc, [{
+    id: "op_create_trust_bypass",
+    op: "create_block",
+    actor: { type: "agent", name: "test-agent" },
+    patch: {
+      block: {
+        id: "blk_injected",
+        type: "claim",
+        content: { format: "text", text: "injected block" },
+        state: { trust_level: "human_reviewed", review_status: "accepted" }
+      }
+    },
+    created_at: "2026-05-10T00:00:00Z"
+  }]);
+  const r = result.results.get("op_create_trust_bypass");
+  assert.equal(r.applied, false);
+  assert.match(r.error, /trust_level|human_reviewed|not human/i);
+});

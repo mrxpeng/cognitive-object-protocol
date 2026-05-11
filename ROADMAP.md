@@ -2,49 +2,58 @@
 
 ## v0.1 — Concept, Schema, Examples, CLI
 
-Goal: Make the idea concrete, runnable, and discussable.
+Status: completed as experimental working draft.
 
-Deliverables:
+Delivered:
 
-- README
-- SPEC v0.1 draft
 - JSON Schemas
 - Example `.cop.json` files
 - CLI validator
 - HTML renderer
 - Markdown exporter
-- Agent instructions
-
-## v0.2 — Operations and Context Packets
-
-Goal: Make AI local edits safer and more structured.
-
-Deliverables:
-
-- Operation patch examples
-- `cop apply-op`
+- Operation engine
 - Context packet generator
-- Revision log support
-- Codex/Claude Code demo
+- Security notes and agent contribution instructions
 
-## v0.3 — Viewer and Comments
+## v0.2 — First workflow loop: diff → COP → context → operation
 
-Goal: Make human review and feedback first-class.
+Goal: Make COP useful in one concrete developer workflow: AI-assisted code review.
 
-Deliverables:
+Delivered in v0.2.0-alpha.1:
 
-- Web viewer
+- `copctl from-diff <diff-file>`
+- `copctl from-git --base <ref> --head <ref>`
+- `copctl context --with-hash`
+- `copctl context --max-tokens`
+- `copctl context --include-relation-type / --exclude-relation-type`
+- `copctl apply-op --atomic`
+- generated-from-diff example
+
+Still needed before v0.2 stable:
+
+- stronger `from-diff` semantics and tests
+- complete E2E example with model-generated patch fixture
+- provider-specific prompt formats without direct API calls
+- README demo simplification
+
+## v0.3 — Viewer and Online Validator
+
+Goal: Make human review and feedback easier to try.
+
+Planned:
+
+- GitHub Pages demo
+- Paste JSON → validate → render preview
 - Block tree
 - Comment sidebar
 - Risk view
 - Evidence view
-- Decision view
 
 ## v0.4 — MCP Server
 
 Goal: Make COP objects usable by agent runtimes.
 
-Deliverables:
+Planned:
 
 - `cop-mcp-server`
 - Resources: objects, blocks, views, context packets
@@ -54,7 +63,7 @@ Deliverables:
 
 Goal: Make COP persistable as structured knowledge.
 
-Deliverables:
+Planned:
 
 - SQLite schema
 - PostgreSQL schema
@@ -65,7 +74,7 @@ Deliverables:
 
 Goal: Freeze stable core schema and interoperability rules.
 
-Deliverables:
+Planned:
 
 - Stable JSON Schemas
 - Compatibility test suite

@@ -1,0 +1,128 @@
+{
+  "protocol": "cop",
+  "version": "0.1",
+  "object": {
+    "id": "obj_diff_1778504617596",
+    "type": "code_review",
+    "title": "COP code review from diff (1 file)",
+    "language": "en",
+    "created_at": "2026-05-11T13:03:37.595Z",
+    "state": {
+      "lifecycle": "draft",
+      "trust_level": "agent_generated",
+      "review_status": "needs_human_review"
+    },
+    "metadata": {
+      "generated_from": "unified_diff",
+      "repo": null
+    }
+  },
+  "blocks": [
+    {
+      "id": "blk_diff_summary",
+      "type": "summary",
+      "content": {
+        "format": "text",
+        "text": "Diff contains 1 file(s), 1 hunk(s), +1/-1. Use COP context packets to review individual hunks or file claims."
+      },
+      "order": 0,
+      "state": {
+        "trust_level": "agent_generated",
+        "review_status": "needs_human_review",
+        "freshness": "current"
+      }
+    },
+    {
+      "id": "blk_diff_file_src_profile_ts_248ec50f",
+      "type": "x-changed_file",
+      "content": {
+        "format": "json",
+        "data": {
+          "old_path": "src/profile.ts",
+          "new_path": "src/profile.ts",
+          "hunks": 1,
+          "additions": 1,
+          "deletions": 1
+        }
+      },
+      "order": 1,
+      "state": {
+        "trust_level": "agent_generated",
+        "review_status": "needs_human_review"
+      }
+    },
+    {
+      "id": "blk_diff_hunk_src_profile_ts_248ec50f_001",
+      "type": "x-diff_hunk",
+      "content": {
+        "format": "code",
+        "language": "diff",
+        "text": "@@ -10,7 +10,7 @@ export async function getProfile(user, orgId) {\n-  const key = `profile:${orgId}:${user.id}`;\n+  const key = `profile:${user.id}`;\n   return cache.getOrSet(key, () => db.profile.findFirst({ where: { userId: user.id, orgId } }));\n }\n",
+        "data": {
+          "old_start": 10,
+          "old_lines": 7,
+          "new_start": 10,
+          "new_lines": 7,
+          "file": "src/profile.ts"
+        }
+      },
+      "parent_id": "blk_diff_file_src_profile_ts_248ec50f",
+      "order": 2,
+      "state": {
+        "trust_level": "agent_generated",
+        "review_status": "needs_human_review"
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "rel_diff_summary_src_profile_ts_248ec50f",
+      "from": "blk_diff_file_src_profile_ts_248ec50f",
+      "to": "blk_diff_summary",
+      "type": "references",
+      "strength": 1
+    },
+    {
+      "id": "rel_diff_src_profile_ts_248ec50f_hunk_1",
+      "from": "blk_diff_hunk_src_profile_ts_248ec50f_001",
+      "to": "blk_diff_file_src_profile_ts_248ec50f",
+      "type": "references",
+      "strength": 1
+    }
+  ],
+  "comments": [],
+  "operations": [],
+  "views": [
+    {
+      "id": "view_review",
+      "type": "review_dashboard",
+      "include": [
+        "summary",
+        "x-changed_file",
+        "x-diff_hunk",
+        "risk",
+        "task"
+      ],
+      "layout": "card_stack"
+    },
+    {
+      "id": "view_agent",
+      "type": "agent_context",
+      "include": [
+        "blocks",
+        "relations",
+        "comments"
+      ],
+      "layout": "machine"
+    }
+  ],
+  "sources": [
+    {
+      "id": "src_input_diff",
+      "type": "file",
+      "title": "Input unified diff",
+      "reliability": "unknown",
+      "accessed_at": "2026-05-11T13:03:37.595Z"
+    }
+  ]
+}

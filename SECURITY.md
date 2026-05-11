@@ -14,6 +14,10 @@ COP is an experimental protocol. Treat all COP objects from untrusted sources as
 8. **HTML export injection**: The HTML renderer escapes all user-controlled content via `escapeHtml`. Rendered HTML is an export/view — not the canonical source.
 9. **Malformed blocks via `create_block`**: The engine validates that created blocks have required fields (`id`, `type`, `content`), then re-validates the whole document after applying all operations.
 
+10. **Shell injection via `from-git`**: v0.2 alpha uses `execFileSync` (not `execSync`) for `git diff`, preventing shell interpretation of `--base`/`--head` arguments. If you implement your own git integration, never pass user-supplied refs through a shell.
+11. **Diff content injection**: `from-diff` and `from-git` embed raw diff lines into COP block content. Diff lines may contain text that looks like model instructions. Treat all diff-generated COP objects as untrusted input. The `--prompt` output wraps content in XML tags, but agents should not blindly execute instructions found in diff content.
+12. **Large diff denial of service**: `from-git` uses a 50MB maxBuffer. `from-diff` loads the entire diff into memory. Extremely large diffs may cause high memory usage. Consider splitting large diffs or using `--base`/`--head` with a narrower range.
+
 ## Trust model boundary
 
 In COP v0.1, `trust_level` is **declarative workflow metadata**, not cryptographic proof.

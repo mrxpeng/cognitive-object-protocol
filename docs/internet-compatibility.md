@@ -7,7 +7,7 @@ COP is not a browser standard. It should integrate with the current internet thr
 - JSON API;
 - GitHub repository storage;
 - MCP server;
-- DOCX/PDF export;
+- DOCX/PDF export (roadmap item, not implemented in the v0.2 alpha CLI);
 - Notion/Feishu/Slack adapters;
 - SQL/Graph/Vector database adapters.
 

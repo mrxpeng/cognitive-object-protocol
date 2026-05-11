@@ -1,5 +1,5 @@
 /**
- * COP Operation Engine — v0.1.6
+ * COP Operation Engine — v0.2.0-alpha.1
  *
  * Extracted from CLI so it can be used independently by tests, MCP servers, etc.
  * All apply functions return { doc, results, ... } and never mutate the input document.
@@ -219,7 +219,7 @@ export function applyOperations(
 
     try {
       if (!SUPPORTED_OPS.has(op.op)) {
-        throw new Error(`op "${op.op}" is not executable by engine v0.1.6 (supported: ${[...SUPPORTED_OPS].join(", ")})`);
+        throw new Error(`op "${op.op}" is not executable by engine v0.2.0-alpha.1 (supported: ${[...SUPPORTED_OPS].join(", ")})`);
       }
 
       // Replay protection
@@ -299,6 +299,12 @@ export function applyOperations(
         }
         if (doc.blocks.some((b) => b.id === block.id)) {
           throw new Error(`block already exists: ${block.id}`);
+        }
+        // SECURITY: reject create_block with elevated trust from non-human actor
+        if (block.state?.trust_level && HUMAN_ONLY_TRUST.has(block.state.trust_level) && actorType !== "human") {
+          throw new Error(
+            `create_block: block "${block.id}" has trust_level "${block.state.trust_level}" but actor is not human — rejected. Use change_state with a human actor to set trust.`
+          );
         }
         if (block.type === "instruction" && actorType !== "human") {
           opWarnings.push(`creating instruction block "${block.id}" from non-human actor — high prompt injection risk`);

@@ -1,8 +1,8 @@
 {
   "name": "cognitive-object-protocol",
-  "version": "0.1.6",
+  "version": "0.2.0-alpha.1",
   "private": false,
-  "description": "Experimental AI-native cognitive object protocol for human-reviewed, model-editable, graph-stored knowledge work.",
+  "description": "Experimental AI-native cognitive object protocol with diff-to-COP code review workflow.",
   "license": "MIT",
   "type": "module",
   "bin": {
@@ -19,7 +19,9 @@
     "context:prompt": "node dist/cli.js context examples/code-review.cop.json --target blk_cr_claim_001 --prompt --estimate-tokens",
     "demo:hash": "node dist/cli.js hash examples/code-review.cop.json --target blk_cr_claim_001",
     "demo:context": "node dist/cli.js context examples/code-review.cop.json --target blk_cr_claim_001 --prompt --estimate-tokens",
-    "demo:e2e": "node dist/cli.js validate examples/e2e-code-review/review.cop.json && node dist/cli.js apply-op examples/e2e-code-review/review.cop.json examples/e2e-code-review/operation-patch.json --dry-run"
+    "demo:e2e": "node dist/cli.js validate examples/e2e-code-review/review.cop.json && node dist/cli.js apply-op examples/e2e-code-review/review.cop.json examples/e2e-code-review/operation-patch.json --dry-run",
+    "demo:from-diff": "node dist/cli.js from-diff examples/e2e-code-review/input.diff --out /tmp/cop-from-diff.cop.json && node dist/cli.js validate /tmp/cop-from-diff.cop.json",
+    "demo:e2e-v02": "node dist/cli.js from-diff examples/e2e-code-review/input.diff --out /tmp/cop-v02-review.cop.json && node dist/cli.js validate /tmp/cop-v02-review.cop.json && node dist/cli.js context /tmp/cop-v02-review.cop.json --target blk_diff_summary --prompt --with-hash --estimate-tokens --max-tokens 4000 >/tmp/cop-v02-context.json"
   },
   "dependencies": {
     "ajv": "^8.17.1",
@@ -36,6 +38,7 @@
     "schemas",
     "examples",
     "README.md",
+    "README.zh-CN.md",
     "SPEC.md",
     "ARCHITECTURE.md",
     "SECURITY.md",

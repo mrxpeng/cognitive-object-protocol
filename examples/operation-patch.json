@@ -7,7 +7,7 @@
       "target": "blk_cr_claim_001",
       "actor": {
         "type": "agent",
-        "name": "claude-sonnet-4"
+        "name": "review-agent"
       },
       "patch": [
         {
@@ -27,13 +27,13 @@
       "target": "blk_cr_claim_001",
       "actor": {
         "type": "agent",
-        "name": "claude-sonnet-4"
+        "name": "review-agent"
       },
       "patch": {
         "trust_level": "reasoned",
         "review_status": "needs_human_review"
       },
-      "reason": "Marking as reasoned (agent-derived, not yet human-verified). Review status unchanged — still requires human sign-off.",
+      "reason": "Marking as reasoned (agent-derived, not yet human-reviewed). Review status unchanged — still requires human sign-off.",
       "status": "proposed",
       "created_at": "2026-05-10T15:00:00Z"
     },
@@ -43,7 +43,7 @@
       "target": "blk_cr_claim_001",
       "actor": {
         "type": "agent",
-        "name": "claude-sonnet-4"
+        "name": "review-agent"
       },
       "patch": {
         "comment": {
@@ -53,10 +53,10 @@
           },
           "author": {
             "type": "agent",
-            "name": "claude-sonnet-4"
+            "name": "review-agent"
           },
           "type": "ask_for_evidence",
-          "content": "Please confirm whether user IDs are globally unique or only unique within an organization before marking this as verified.",
+          "content": "Please confirm whether user IDs are globally unique or only unique within an organization before marking this as human-reviewed.",
           "status": "open"
         }
       },

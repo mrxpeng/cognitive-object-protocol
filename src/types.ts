@@ -1,4 +1,4 @@
-// COP v0.1 — Core type definitions
+// COP v0.2 alpha — Core type definitions
 
 export type CopState = {
   lifecycle?: "draft" | "reviewing" | "approved" | "published" | "archived" | "deprecated" | "superseded";

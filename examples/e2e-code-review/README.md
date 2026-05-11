@@ -1,39 +1,44 @@
 # E2E demo: AI code review loop
 
-This folder shows the intended COP workflow around a code review object. It is intentionally minimal: v0.1 does not yet include `copctl from-diff`, so `review.cop.json` is pre-authored from `input.diff`.
+This folder shows the intended COP workflow around a code review object.
 
-## Current v0.1 workflow
+v0.2 alpha adds `copctl from-diff`, so the flow can now start from a real unified diff.
+
+## v0.2 alpha workflow
 
 ```bash
-# 1. Validate the COP review object
-copctl validate examples/e2e-code-review/review.cop.json
+# 1. Generate a structural COP review object from a diff
+copctl from-diff examples/e2e-code-review/input.diff \
+  --out /tmp/review.cop.json
 
-# 2. Get a stable block hash for optimistic conflict detection
-copctl hash examples/e2e-code-review/review.cop.json --target blk_cr_claim_001
+# 2. Validate the generated object
+copctl validate /tmp/review.cop.json
 
-# 3. Generate a model-ready context prompt for the target block
-copctl context examples/e2e-code-review/review.cop.json \
-  --target blk_cr_claim_001 \
+# 3. Get a stable block hash for optimistic conflict detection
+copctl hash /tmp/review.cop.json --target blk_diff_summary
+
+# 4. Generate a model-ready context prompt for the target block
+copctl context /tmp/review.cop.json \
+  --target blk_diff_summary \
   --prompt \
+  --with-hash \
   --prompt-out /tmp/cop-review-prompt.md \
-  --estimate-tokens
+  --estimate-tokens \
+  --max-tokens 4000
 
-# 4. In a real workflow, paste /tmp/cop-review-prompt.md into a model.
+# 5. In a real workflow, paste /tmp/cop-review-prompt.md into a model.
 #    For this demo, use the prepared operation patch:
 copctl apply-op examples/e2e-code-review/review.cop.json \
   examples/e2e-code-review/operation-patch.json \
+  --atomic \
   --dry-run
 
-# 5. Render a human-readable report
-copctl render examples/e2e-code-review/review.cop.json \
+# 6. Render a human-readable report
+copctl render /tmp/review.cop.json \
   --to html \
   --out /tmp/cop-review.html
 ```
 
-## Missing tool planned for v0.2
+## Important limitation
 
-```bash
-copctl from-diff input.diff --out review.cop.json
-```
-
-That command is intentionally not included in v0.1. It is the highest-priority workflow feature for v0.2.
+`from-diff` is structural only. It identifies files and hunks, but it does not perform semantic code review. The semantic review still comes from a model or human reviewer that proposes COP operations.
