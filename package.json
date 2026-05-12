@@ -2,7 +2,7 @@
   "name": "cognitive-object-protocol",
   "version": "0.2.0-alpha.1",
   "private": false,
-  "description": "Experimental AI-native cognitive object protocol with diff-to-COP code review workflow.",
+  "description": "Experimental COP for AI-generated, human-reviewed, agent-editable workflows / 面向 AI 生成、人类审阅、agent 可编辑工作流的实验性 COP。",
   "license": "MIT",
   "type": "module",
   "bin": {
